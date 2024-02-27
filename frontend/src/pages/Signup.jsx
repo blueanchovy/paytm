@@ -1,25 +1,82 @@
-import React from "react";
+import React, { useState } from "react";
 import Logo from "../components/Logo";
 import Heading from "../components/Heading";
 import SubHeading from "../components/SubHeading";
 import InputBox from "../components/InputBox";
 import { Button } from "../components/Button";
 import BottomWarning from "../components/BottomWarning";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+const initialFormData = {
+  firstname: "",
+  lastname: "",
+  username: "",
+  password: "",
+};
 
 const Signup = () => {
+  const [formData, setFormData] = useState({ ...initialFormData });
+  const navigate = useNavigate();
   return (
-    <div className="bg-slate-300 h-100 flex justify-center py-4">
-      <div className="flex flex-col justify-center">
-        <div className="rounded-lg bg-white w-80 text-center p-2 h-max px-4">
+    <div className="bg-slate-300 h-screen flex justify-center py-4 mx-auto my-0">
+      <div className="flex flex-col justify-center mx-auto my-0">
+        <div className="rounded-lg bg-white max-w-[80%] w-100 text-center p-2 h-max px-4 mx-auto my-0">
           <Logo />
           <Heading label={"Sign up"} />
           <SubHeading label={"Enter your information to create an account."} />
-          <InputBox label={"First Name"} placeholder={"Abhishek"} />
-          <InputBox label={"Last Name"} placeholder={"Kumar"} />
-          <InputBox label={"Email"} placeholder={"abc@xyz.com"} />
-          <InputBox label={"Password"} placeholder={"123456"} />
+          <InputBox
+            onChange={(e) =>
+              setFormData({ ...formData, firstname: e.target.value })
+            }
+            label={"First Name"}
+            placeholder={"Abhishek"}
+          />
+          <InputBox
+            onChange={(e) =>
+              setFormData({ ...formData, lastname: e.target.value })
+            }
+            label={"Last Name"}
+            placeholder={"Kumar"}
+          />
+          <InputBox
+            onChange={(e) =>
+              setFormData({ ...formData, username: e.target.value })
+            }
+            label={"Email"}
+            placeholder={"abc@xyz.com"}
+          />
+          <InputBox
+            onChange={(e) =>
+              setFormData({ ...formData, password: e.target.value })
+            }
+            label={"Password"}
+            placeholder={"123456"}
+          />
           <div className="pt-6">
-            <Button label={"Sign up"} />
+            <Button
+              label={"Sign up"}
+              onClick={async () => {
+                try {
+                  const response = await axios.post(
+                    "http://localhost:3000/api/v1/user/signup",
+                    {
+                      ...formData,
+                    }
+                  );
+                  const token = response.data.token;
+                  // console.log(response);
+                  // console.log(response.data);
+                  // console.log(response.data.token);
+                  const endOfDay = new Date();
+                  endOfDay.setHours(23, 59, 59, 999);
+                  document.cookie = `jwtToken=${token}; expires=${endOfDay.toUTCString()}; SameSite=Strict`;
+                  navigate("/dashboard");
+                } catch (err) {
+                  console.error("Error signing up:", err);
+                }
+              }}
+            />
           </div>
 
           <BottomWarning
