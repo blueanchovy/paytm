@@ -61,7 +61,7 @@ router.post("/transfer", authMiddleware, async function (req, res) {
 
     await Account.updateOne(
       { userId: payeeId },
-      { $inc: { balance: amount } }
+      { $inc: { balance: +amount } }
     ).session(session);
 
     await session.commitTransaction();
