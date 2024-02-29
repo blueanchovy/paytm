@@ -24,41 +24,49 @@ router.get("/balance", authMiddleware, async function (req, res) {
 
 router.post("/transfer", authMiddleware, async function (req, res) {
   const payeeId = req.body.to;
-  const amount = req.body.amount;
+  const amount = parseInt(req.body.amount);
 
   const isValidTransaction = transactionValidation.safeParse({
     payeeId,
     amount,
   });
-
+  console.log(isValidTransaction);
   if (!isValidTransaction) {
     res.status(400).json({ msg: "Invalid Details!" });
   }
-
-  const userAccount = await Account.findOne({ userId: req.userId });
-
-  if (!(userAccount.balance > amount)) {
-    res.status(400).json({ msg: "Insufficient balance!" });
-  }
-
-  const payeeAccount = await Account.findOne({ userId: payeeId });
-
-  if (!payeeAccount) {
-    res.status(404).json({ msg: "Payee account not found!" });
-  }
-
   const session = await mongoose.startSession();
   try {
     session.startTransaction();
+    const userAccount = await Account.findOne({ userId: req.userId }).session(
+      session
+    );
+    if (userAccount.balance < amount) {
+      await session.abortTransaction();
+      session.endSession();
+      return res.status(403).json({ msg: "Insufficient balance!" });
+    }
+    const payeeAccount = await Account.findOne({ userId: payeeId }).session(
+      session
+    );
+
+    if (!payeeAccount) {
+      await session.abortTransaction();
+      session.endSession();
+      return res.status(404).json({ msg: "Payee account not found!" });
+    }
     await Account.updateOne(
       { userId: req.userId },
       { $inc: { balance: -amount } }
     ).session(session);
+
     await Account.updateOne(
       { userId: payeeId },
-      { $inc: { balance: +amount } }
+      { $inc: { balance: amount } }
     ).session(session);
+
     await session.commitTransaction();
+    session.endSession();
+
     res.status(200).json({ msg: "Transfer successful!" });
   } catch {
     await session.abortTransaction();
