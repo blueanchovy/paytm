@@ -1,3 +1,4 @@
+import { Button } from "./Button";
 import Logo from "./Logo";
 
 const AppBar = () => {
@@ -8,8 +9,10 @@ const AppBar = () => {
       </div>
       <div className="flex">
         <div className="flex flex-col justify-center h-full mr-4">Hello</div>
-        <div className="rounded-full h-12 w-12 bg-slate-200 flex justify-center mt-1 mr-2">
-          <div className="flex flex-col justify-center h-full text-xl">U</div>
+        <div className="h-10 w-min rounded bg-slate-200 flex justify-center my-auto mr-2 cursor-pointer px-4 hover:bg-slate-300">
+          <div className="flex flex-col justify-center h-full text-l font-semibold">
+            Logout
+          </div>
         </div>
       </div>
     </div>

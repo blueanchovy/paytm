@@ -51,19 +51,23 @@ const Signup = () => {
           label={"Sign up"}
           onClick={async () => {
             try {
+              // const response = await axios.post(
+              //   "http://localhost:3000/api/v1/user/signup",
+              //   {
+              //     ...formData,
+              //   }
+              // );
+              // const token = response.data.token;
+              // const endOfDay = new Date();
+              // endOfDay.setHours(23, 59, 59, 999);
+              // document.cookie = `jwtToken=${token}; expires=${endOfDay.toUTCString()}; SameSite=Strict`;
               const response = await axios.post(
                 "http://localhost:3000/api/v1/user/signup",
                 {
                   ...formData,
                 }
               );
-              const token = response.data.token;
-              // console.log(response);
-              // console.log(response.data);
-              // console.log(response.data.token);
-              const endOfDay = new Date();
-              endOfDay.setHours(23, 59, 59, 999);
-              document.cookie = `jwtToken=${token}; expires=${endOfDay.toUTCString()}; SameSite=Strict`;
+              localStorage.setItem("token", response.data.token);
               navigate("/dashboard");
             } catch (err) {
               console.error("Error signing up:", err);
