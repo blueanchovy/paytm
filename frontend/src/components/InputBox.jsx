@@ -1,5 +1,3 @@
-import React from "react";
-
 const InputBox = ({ label, placeholder, onChange }) => {
   return (
     <div>

@@ -1,5 +1,3 @@
-import React from "react";
-
 const Balance = ({ value }) => {
   return (
     <div className="flex">
