@@ -2,9 +2,11 @@ const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("./config");
 function authMiddleware(req, res, next) {
   const token = req.headers.authorization;
+  if (!token.startsWith("Bearer")) {
+    res.status(403).json({ msg: "Invalid token format!" });
+  }
   const jw_token = token.split(" ")[1];
-
-  if (!jw_token || !token.startsWith("Bearer")) {
+  if (!jw_token) {
     res.status(403).json({ msg: "Invalid token format!" });
   }
 
