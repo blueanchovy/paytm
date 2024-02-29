@@ -1,25 +1,33 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 const SendMoney = () => {
   const [debitAmount, setDebitAmount] = useState(null);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [searchParams] = useSearchParams();
   const id = searchParams.get("id");
   const name = searchParams.get("name");
 
-  const getCookie = (name) => {
-    const cookieString = document.cookie;
-    const cookies = cookieString.split("; ");
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i];
-      const [cookieName, cookieValue] = cookie.split("=");
-      if (cookieName === name) {
-        return cookieValue;
-      }
-    }
-    return null;
-  };
+  // const getCookie = (name) => {
+  //   const cookieString = document.cookie;
+  //   const cookies = cookieString.split("; ");
+  //   for (let i = 0; i < cookies.length; i++) {
+  //     const cookie = cookies[i];
+  //     const [cookieName, cookieValue] = cookie.split("=");
+  //     if (cookieName === name) {
+  //       return cookieValue;
+  //     }
+  //   }
+  //   return null;
+  // };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setError(""), setSuccess("");
+    }, 3000);
+  }, [error, success]);
   return (
     <div className="flex justify-center h-screen bg-gray-100">
       <div className="h-full flex flex-col justify-center">
@@ -49,30 +57,48 @@ const SendMoney = () => {
                   className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                   id="amount"
                   placeholder="Enter Amount"
+                  value={debitAmount}
                   onChange={(e) => setDebitAmount(e.target.value)}
                 />
               </div>
               <button
-                onClick={() => {
-                  const token = getCookie("jwtToken");
-                  console.log(token);
-                  axios.post(
-                    "http://localhost:3000/api/v1/account/transfer",
-                    {
-                      to: id,
-                      amount: debitAmount,
-                    },
-                    {
-                      headers: {
-                        authorization: "Bearer" + " " + token,
+                onClick={async () => {
+                  // const token = getCookie("jwtToken");
+                  const token = localStorage.getItem("token");
+                  try {
+                    const response = await axios.post(
+                      "http://localhost:3000/api/v1/account/transfer",
+                      {
+                        to: id,
+                        amount: debitAmount,
                       },
-                    }
-                  );
+                      {
+                        headers: {
+                          authorization: "Bearer" + " " + token,
+                        },
+                      }
+                    );
+                    setError("");
+                    setSuccess(response.data.msg);
+                    setDebitAmount("");
+                  } catch (err) {
+                    setSuccess("");
+                    setError(err.response.data.msg);
+                    setDebitAmount("");
+                  }
                 }}
                 className="justify-center rounded-md-text-sm font-medium ring-offset-background transition-colors h-10 px-4 py-2 w-full bg-blue-500 text-white"
               >
                 Initiate Transfer
               </button>
+              {error && (
+                <h3 className="text-2xl text-red-500 font-semibold">{error}</h3>
+              )}
+              {success && (
+                <h3 className="text-2xl text-green-500 font-semibold">
+                  {success}
+                </h3>
+              )}
             </div>
           </div>
         </div>
