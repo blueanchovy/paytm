@@ -127,7 +127,7 @@ router.put("/", authMiddleware, async function (req, res) {
   }
 });
 
-router.get("/bulk", async function (req, res) {
+router.get("/bulk", authMiddleware, async function (req, res) {
   const filter = req.query.filter || "";
   const users = await User.find({
     $or: [
@@ -142,6 +142,7 @@ router.get("/bulk", async function (req, res) {
       lastname: user.lastname,
       _id: user._id,
     })),
+    userId: req.userId,
   });
 });
 

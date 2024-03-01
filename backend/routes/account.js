@@ -30,7 +30,6 @@ router.post("/transfer", authMiddleware, async function (req, res) {
     payeeId,
     amount,
   });
-  console.log(isValidTransaction);
   if (!isValidTransaction) {
     res.status(400).json({ msg: "Invalid Details!" });
   }
