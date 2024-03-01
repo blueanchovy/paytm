@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import User from "./User";
 import axios from "axios";
 
-const Users = () => {
+const Users = ({ currentUser, setCurrentUser }) => {
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   useEffect(() => {
@@ -10,9 +10,19 @@ const Users = () => {
       async function fetchUsers() {
         try {
           const response = await axios.get(
-            `http://localhost:3000/api/v1/user/bulk?filter=` + searchTerm
+            `http://localhost:3000/api/v1/user/bulk?filter=` + searchTerm,
+            {
+              headers: {
+                authorization: "Bearer" + " " + localStorage.getItem("token"),
+              },
+            }
           );
           setUsers(response.data.user);
+          setCurrentUser(
+            response.data.user.filter(
+              (user) => user._id === response.data.userId
+            )[0]
+          );
         } catch (err) {
           console.log(err);
         }
@@ -21,7 +31,7 @@ const Users = () => {
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [searchTerm]);
+  }, [searchTerm, setCurrentUser]);
   return (
     <>
       <div className="font-bold mt-6 text-lg">Users</div>
@@ -34,9 +44,10 @@ const Users = () => {
         />
       </div>
       <div>
-        {users.map((user, id) => (
-          <User user={user} key={id} />
-        ))}
+        {users.map(
+          (user, id) =>
+            user?._id !== currentUser?._id && <User user={user} key={id} />
+        )}
       </div>
     </>
   );

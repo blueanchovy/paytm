@@ -1,8 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "./Button";
 import Logo from "./Logo";
+import { forwardRef, useEffect, useState } from "react";
 
-const AppBar = () => {
+const AppBar = ({ currentUser }) => {
   const navigate = useNavigate();
   return (
     <div className="shadow h-14 flex justify-between max-w-screen-2xl mx-auto my-0">
@@ -10,7 +11,9 @@ const AppBar = () => {
         <Logo />
       </div>
       <div className="flex">
-        <div className="flex flex-col justify-center h-full mr-4">Hello</div>
+        <div className="flex flex-col justify-center h-full mr-4">
+          Hello, {currentUser?.firstname}
+        </div>
         <div
           className="h-10 w-min rounded bg-slate-200 flex justify-center my-auto mr-2 cursor-pointer px-4 hover:bg-slate-300"
           onClick={() => {

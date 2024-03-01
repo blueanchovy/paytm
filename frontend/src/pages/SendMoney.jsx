@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { Button } from "../components/Button";
 
 const SendMoney = () => {
   const [debitAmount, setDebitAmount] = useState(null);
@@ -9,6 +10,7 @@ const SendMoney = () => {
   const [searchParams] = useSearchParams();
   const id = searchParams.get("id");
   const name = searchParams.get("name");
+  const navigate = useNavigate();
 
   // const getCookie = (name) => {
   //   const cookieString = document.cookie;
@@ -35,7 +37,8 @@ const SendMoney = () => {
           <div className="flex flex-col space-y-1 5 p-6">
             <h2 className="text-3xl font-bold text-center">Send Money</h2>
           </div>
-          <div className="p-6">
+
+          <div className="px-6 !my-2">
             <div className="flex items-center space-x-4 pb-4">
               <div className="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center">
                 <span className="text-2xl text-white">
@@ -99,6 +102,23 @@ const SendMoney = () => {
                   {success}
                 </h3>
               )}
+            </div>
+          </div>
+          <div className="font-semibold text-xl text-center !my-2">Or</div>
+          <div className="!my-0 mx-auto mt-0">
+            <div
+              className="flex flex-col rounded-full justify-center items-center py-4 px-6 w-24 h-24 mt-0 cursor-pointer hover:bg-blue-100 mx-auto my-0 border border-blue-200 bg-blue-50"
+              onClick={() => navigate("/dashboard")}
+            >
+              <img
+                src="/arrow-left-solid.svg"
+                alt="back"
+                width="56px"
+                height="56px"
+              />
+            </div>
+            <div className="text-lg mx-auto my-2 text-center font-semibold">
+              Return to Dashboard
             </div>
           </div>
         </div>

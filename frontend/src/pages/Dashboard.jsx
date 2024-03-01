@@ -6,6 +6,7 @@ import axios from "axios";
 
 const Dashboard = () => {
   const [balance, setBalance] = useState(null);
+  const [currentUser, setCurrentUser] = useState({});
 
   useEffect(() => {
     const getCurrentBalance = async () => {
@@ -18,10 +19,7 @@ const Dashboard = () => {
             },
           }
         );
-        console.log(response);
-        console.log(response.data);
-        console.log(response.data.balance);
-        console.log(response.balance);
+
         setBalance(response.data.balance);
       } catch (err) {
         console.log(err);
@@ -32,10 +30,10 @@ const Dashboard = () => {
 
   return (
     <div>
-      <AppBar />
+      <AppBar currentUser={currentUser} />
       <div className="p-6 max-w-screen-xl mx-auto my-0">
         <Balance value={balance} />
-        <Users />
+        <Users currentUser={currentUser} setCurrentUser={setCurrentUser} />
       </div>
     </div>
   );

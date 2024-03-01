@@ -44,13 +44,10 @@ const Signin = () => {
                 }
               );
               // const token = response.data.token;
-              // console.log(response);
-              // console.log(response.data);
-              // console.log(response.data.token);
               // const endOfDay = new Date();
               // endOfDay.setHours(23, 59, 59, 999);
               // document.cookie = `jwtToken=${token}; expires=${endOfDay.toUTCString()}; SameSite=Strict`;
-              localStorage.setItem("token", response.data.token);
+              await localStorage.setItem("token", response.data.token);
               navigate("/dashboard");
             } catch (err) {
               console.error("Error signing up:", err);

@@ -1,7 +1,8 @@
+import React, { memo } from "react";
 import { Button } from "../components/Button";
 import { useNavigate } from "react-router-dom";
 
-const User = ({ user, id }) => {
+const User = memo(function User({ user, id }) {
   const navigate = useNavigate();
   return (
     <div className="flex justify-between" key={id}>
@@ -34,6 +35,6 @@ const User = ({ user, id }) => {
       </div>
     </div>
   );
-};
+});
 
 export default User;
