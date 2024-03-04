@@ -2,7 +2,7 @@ const express = require("express");
 const zod = require("zod");
 const { User, Account } = require("../db");
 const authMiddleware = require("../middleware").default;
-import { signJWT } from "jose";
+const { signJWT } = require("jose");
 
 const router = express.Router();
 

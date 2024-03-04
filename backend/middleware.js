@@ -1,5 +1,5 @@
-import { jwtVerify } from "jose";
-import { Buffer } from "buffer";
+const { jwtVerify } = require("jose");
+const { Buffer } = require("buffer");
 
 function authMiddleware(req, res, next) {
   const token = req.headers.authorization;
