@@ -1,8 +1,8 @@
 const express = require("express");
 const zod = require("zod");
-const { JWT } = require("jose");
 const { User, Account } = require("../db");
 const authMiddleware = require("../middleware").default;
+import { signJWT } from "jose";
 
 const router = express.Router();
 
@@ -62,7 +62,12 @@ router.post("/signup", async function (req, res) {
     userId: userId,
     balance: Math.floor(Math.random() * 10000 + 1),
   });
-  const token = JWT.sign({ userId }, process.env.JWT_SECRET);
+
+  const token = await signJWT(
+    { userId },
+    { expiresIn: "1 day" },
+    { issuer: "your-issuer" }
+  );
 
   return res
     .status(200)
@@ -81,7 +86,11 @@ router.post("/signin", async function (req, res) {
 
   const user = await User.findOne({ username, password });
   if (user) {
-    const token = JWT.sign({ userId: user._id }, process.env.JWT_SECRET);
+    const token = await signJWT(
+      { userId: user._id },
+      { expiresIn: "1 day" },
+      { issuer: "your-issuer" }
+    );
     return res
       .status(200)
       .json({ msg: "Logged in successfully", token: token });

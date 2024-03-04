@@ -1,5 +1,4 @@
-import { jwtVerify } from "jose/jwt/verify";
-import { decode } from "jose/util/base64url";
+import { jwtVerify } from "jose";
 import { Buffer } from "buffer";
 
 function authMiddleware(req, res, next) {
