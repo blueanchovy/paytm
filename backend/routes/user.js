@@ -1,8 +1,6 @@
-// backend/routes/index.js
 const express = require("express");
 const zod = require("zod");
-const jwt = require("jsonwebtoken");
-const userRouter = require("./user");
+const { JWT } = require("jose");
 const { User, Account } = require("../db");
 const authMiddleware = require("../middleware").default;
 
@@ -64,7 +62,7 @@ router.post("/signup", async function (req, res) {
     userId: userId,
     balance: Math.floor(Math.random() * 10000 + 1),
   });
-  const token = jwt.sign({ userId }, process.env.JWT_SECRET);
+  const token = JWT.sign({ userId }, process.env.JWT_SECRET);
 
   return res
     .status(200)
@@ -83,7 +81,7 @@ router.post("/signin", async function (req, res) {
 
   const user = await User.findOne({ username, password });
   if (user) {
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
+    const token = JWT.sign({ userId: user._id }, process.env.JWT_SECRET);
     return res
       .status(200)
       .json({ msg: "Logged in successfully", token: token });

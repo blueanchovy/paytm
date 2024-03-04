@@ -1,26 +1,29 @@
-import { verify } from "jsonwebtoken";
+import { jwtVerify } from "jose/jwt/verify";
+import { decode } from "jose/util/base64url";
+import { Buffer } from "buffer";
+
 function authMiddleware(req, res, next) {
   const token = req.headers.authorization;
-  if (!token.startsWith("Bearer")) {
+  if (!token || !token.startsWith("Bearer")) {
     res.status(403).json({ msg: "Invalid token format!" });
+    return;
   }
-  const jw_token = token.split(" ")[1];
-  if (!jw_token) {
+  const jwt = token.split(" ")[1];
+  if (!jwt) {
     res.status(403).json({ msg: "Invalid token format!" });
+    return;
   }
 
   try {
-    verify(jw_token, process.env.JWT_SECRET, (err, user) => {
-      if (err) {
-        res.status(411).json({ msg: "Unauthorized user!" });
-      } else {
-        req.userId = user.userId;
-        next();
-      }
-    });
+    const { payload } = jwtVerify(
+      jwt,
+      Buffer.from(process.env.JWT_SECRET, "base64")
+    );
+    req.userId = payload.userId;
+    next();
   } catch (err) {
-    console.log(err);
-    res.status(403).json({ msg: "Not found." });
+    console.error(err);
+    res.status(403).json({ msg: "Unauthorized user!" });
   }
 }
 
