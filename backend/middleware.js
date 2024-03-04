@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const { JWT_SECRET } = require("./config");
 function authMiddleware(req, res, next) {
   const token = req.headers.authorization;
   if (!token.startsWith("Bearer")) {
@@ -11,7 +10,7 @@ function authMiddleware(req, res, next) {
   }
 
   try {
-    jwt.verify(jw_token, JWT_SECRET, (err, user) => {
+    jwt.verify(jw_token, process.env.JWT_SECRET, (err, user) => {
       if (err) {
         res.status(411).json({ msg: "Unauthorized user!" });
       } else {
