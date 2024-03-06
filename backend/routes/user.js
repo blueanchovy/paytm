@@ -1,7 +1,7 @@
 const express = require("express");
 const zod = require("zod");
 const { User, Account } = require("../db");
-const authMiddleware = require("../middleware").default;
+const authMiddleware = require("../middleware");
 const { signJWT } = require("jose");
 
 const router = express.Router();
