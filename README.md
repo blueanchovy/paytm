@@ -1,2 +1,2 @@
 
-## Build a basic version of PayTM
+## A basic version of PayTM built with React(vite) Tailwind, ExpressJS, NodeJS
