@@ -12,7 +12,23 @@
         {
           "key": "Access-Control-Allow-Headers",
           "value": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
-        }
+        },
+        { "key": "Access-Control-Request-Headers", "value": "content-type" },
+        {
+          "key": "Access-Control-Request-Method",
+          "value": "GET,OPTIONS,PATCH,DELETE,POST,PUT"
+        },
+        { "key": "Connection", "value": "keep-alive" },
+        { "key": "Origin", "value": "https://localhost:5173" },
+        { "Sec-Fetch-Dest": "empty" },
+        { "key": "Sec-Fetch-Mode", "value": "cors" },
+        { "key": "Sec-Fetch-Site", "value": "cross-site" },
+        {
+          "key": "User-Agent",
+          "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
+        },
+        { "key": "Accept", "value": "application/json, text/plain */*" },
+        { "key": "Content-Type", "value": "application/json" }
       ]
     }
   ]
