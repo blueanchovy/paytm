@@ -5,7 +5,16 @@ const { customCorsOptions } = require("./middleware");
 
 const app = express();
 
-app.use(cors({ origin: "*" }));
+const options = [
+  cors({
+    origin: "https://paytm-9f39.vercel.app/",
+    methods: "*",
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  }),
+];
+
+app.use(options);
 app.use(express.json());
 app.use(express.static("public"));
 
