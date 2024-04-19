@@ -19,6 +19,7 @@ const initialFormData = {
 const Signup = () => {
   const [formData, setFormData] = useState({ ...initialFormData });
   const navigate = useNavigate();
+
   return (
     <AuthContainer>
       <Logo />
