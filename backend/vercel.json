@@ -19,7 +19,7 @@
           "value": "GET,OPTIONS,PATCH,DELETE,POST,PUT"
         },
         { "key": "Connection", "value": "keep-alive" },
-        { "key": "Origin", "value": "https://paytm-9f39.vercel.app/" },
+        { "key": "Origin", "value": "https://paytm-9f39.vercel.app" },
         { "key": "Sec-Fetch-Dest", "value": "empty" },
         { "key": "Sec-Fetch-Mode", "value": "cors" },
         { "key": "Sec-Fetch-Site", "value": "cross-site" },
