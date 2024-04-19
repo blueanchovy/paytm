@@ -38,7 +38,7 @@ const Signin = () => {
           onClick={async () => {
             try {
               const response = await axios.post(
-                "http://localhost:3000/api/v1/user/signin",
+                `$${import.meta.env.PAYTMAPI_URL}/api/v1/user/signin`,
                 {
                   ...formData,
                 }
@@ -47,7 +47,7 @@ const Signin = () => {
               // const endOfDay = new Date();
               // endOfDay.setHours(23, 59, 59, 999);
               // document.cookie = `jwtToken=${token}; expires=${endOfDay.toUTCString()}; SameSite=Strict`;
-              await localStorage.setItem("token", response.data.token);
+              await localStorage.setItem("token", response?.data?.token);
               navigate("/dashboard");
             } catch (err) {
               console.error("Error signing up:", err);

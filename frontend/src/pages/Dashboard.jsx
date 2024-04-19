@@ -12,7 +12,7 @@ const Dashboard = () => {
     const getCurrentBalance = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/api/v1/account/balance",
+          `${import.meta.env.PAYTMAPI_URL}/api/v1/account/balance`,
           {
             headers: {
               authorization: "Bearer" + " " + localStorage.getItem("token"),
