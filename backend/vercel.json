@@ -20,7 +20,7 @@
         },
         { "key": "Connection", "value": "keep-alive" },
         { "key": "Origin", "value": "https://localhost:5173" },
-        { "Sec-Fetch-Dest": "empty" },
+        { "key": "Sec-Fetch-Dest", "value": "empty" },
         { "key": "Sec-Fetch-Mode", "value": "cors" },
         { "key": "Sec-Fetch-Site", "value": "cross-site" },
         {
