@@ -70,7 +70,9 @@ const SendMoney = () => {
                   const token = localStorage.getItem("token");
                   try {
                     const response = await axios.post(
-                      `${import.meta.env.PAYTMAPI_URL}/api/v1/account/transfer`,
+                      `${
+                        import.meta.env.VITE_PAYTMAPI_URL
+                      }/api/v1/account/transfer`,
                       {
                         to: id,
                         amount: debitAmount,

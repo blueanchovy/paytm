@@ -63,7 +63,7 @@ const Signup = () => {
               // endOfDay.setHours(23, 59, 59, 999);
               // document.cookie = `jwtToken=${token}; expires=${endOfDay.toUTCString()}; SameSite=Strict`;
               const response = await axios.post(
-                `${import.meta.env.PAYTMAPI_URL}/api/v1/user/signup`,
+                `${import.meta.env.VITE_PAYTMAPI_URL}/api/v1/user/signup`,
                 {
                   ...formData,
                 }

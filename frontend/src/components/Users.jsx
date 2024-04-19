@@ -10,7 +10,7 @@ const Users = ({ currentUser, setCurrentUser }) => {
       async function fetchUsers() {
         try {
           const response = await axios.get(
-            `${import.meta.env.PAYTMAPI_URL}/api/v1/user/bulk?filter=` +
+            `${import.meta.env.VITE_PAYTMAPI_URL}/api/v1/user/bulk?filter=` +
               searchTerm,
             {
               headers: {

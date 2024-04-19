@@ -38,7 +38,7 @@ const Signin = () => {
           onClick={async () => {
             try {
               const response = await axios.post(
-                `$${import.meta.env.PAYTMAPI_URL}/api/v1/user/signin`,
+                `$${import.meta.env.VITE_PAYTMAPI_URL}/api/v1/user/signin`,
                 {
                   ...formData,
                 }

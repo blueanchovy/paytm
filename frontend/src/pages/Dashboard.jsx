@@ -12,7 +12,7 @@ const Dashboard = () => {
     const getCurrentBalance = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.PAYTMAPI_URL}/api/v1/account/balance`,
+          `${import.meta.env.VITE_PAYTMAPI_URL}/api/v1/account/balance`,
           {
             headers: {
               authorization: "Bearer" + " " + localStorage.getItem("token"),
