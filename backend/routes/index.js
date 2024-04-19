@@ -5,6 +5,9 @@ const accountRouter = require("./account");
 
 const router = express.Router();
 
+router.use("/", () => {
+  return res.status(200).json({ msg: "ok" });
+});
 router.use("/user", userRouter);
 router.use("/account", accountRouter);
 
