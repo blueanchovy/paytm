@@ -5,7 +5,7 @@ const { customCorsOptions } = require("./middleware");
 
 const app = express();
 
-app.use(cors(customCorsOptions));
+app.use(cors("*"));
 app.use(express.json());
 app.use(express.static("public"));
 
